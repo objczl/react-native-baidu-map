@@ -23,6 +23,7 @@ export default class MapView extends Component {
     clusterEnabled: PropTypes.bool,
     mapType: PropTypes.number,
     zoom: PropTypes.number,
+    centerTrackingEnabled: PropTypes.bool,
     showsUserLocation: PropTypes.bool,
     scrollGesturesEnabled: PropTypes.bool, //是否允许拖动
     zoomGesturesEnabled: PropTypes.bool,//是否充许手势缩放
@@ -63,7 +64,7 @@ export default class MapView extends Component {
   render() {
     return <BaiduMapView {...this.props} onChange={this._onChange.bind(this)}/>;
   }
-  
+
 }
 
 const BaiduMapView = requireNativeComponent('BaiduMapView', MapView, {

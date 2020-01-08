@@ -20,6 +20,7 @@ RCT_EXPORT_VIEW_PROPERTY(mapType, int)
 RCT_EXPORT_VIEW_PROPERTY(zoom, float)
 RCT_EXPORT_VIEW_PROPERTY(showsUserLocation, BOOL);
 RCT_EXPORT_VIEW_PROPERTY(showMapPoi, BOOL);
+RCT_EXPORT_VIEW_PROPERTY(centerTrackingEnabled, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(scrollGesturesEnabled, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(zoomGesturesEnabled, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(trafficEnabled, BOOL)
@@ -136,7 +137,7 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
         annotationLabel.backgroundColor = [UIColor greenColor];
         annotationView.alpha = 0.8;
         [annotationView addSubview:annotationLabel];
-        
+
         if (cluster.size == 1) {
             annotationLabel.hidden = YES;
             annotationView.pinColor = BMKPinAnnotationColorRed;
@@ -209,6 +210,13 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
 - (void)mapStatusDidChanged: (BMKMapView *)mapView {
     CLLocationCoordinate2D targetGeoPt = [mapView getMapStatus].targetGeoPt;
     BMKCoordinateRegion region = mapView.region;
+
+    if (mapView.annotations.count > 0 && ((BaiduMapView *)mapView).centerTrackingEnabled) {
+        BMKPointAnnotation *annotation = mapView.annotations[0];
+        annotation.coordinate = targetGeoPt;
+        return;
+    }
+
     NSDictionary* event = @{
                             @"type": @"onMapStatusChange",
                             @"params": @{

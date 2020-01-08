@@ -24,6 +24,7 @@
 @interface BaiduMapView : BMKMapView <BMKMapViewDelegate>
 
 @property(nonatomic) BOOL clusterEnabled;
+@property(nonatomic) BOOL centerTrackingEnabled;
 @property(nonatomic) int childrenCount;
 @property (nonatomic) BMKUserLocation *userLocation;
 @property (nonatomic, copy) RCTBubblingEventBlock onChange;
