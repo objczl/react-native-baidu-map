@@ -214,7 +214,6 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
     if (mapView.annotations.count > 0 && ((BaiduMapView *)mapView).centerTrackingEnabled) {
         BMKPointAnnotation *annotation = mapView.annotations[0];
         annotation.coordinate = targetGeoPt;
-        return;
     }
 
     NSDictionary* event = @{
