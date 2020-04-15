@@ -223,14 +223,24 @@ public class GeolocationModule extends BaseModule
 
             WritableArray list = Arguments.createArray();
             List<PoiInfo> poiList = result.getPoiList();
-            for (PoiInfo info: poiList) {
+            if (poiList == null) {
                 WritableMap attr = Arguments.createMap();
-                attr.putString("name", info.name);
-                attr.putString("address", info.address);
-                attr.putString("city", info.city);
-                attr.putDouble("latitude", info.location.latitude);
-                attr.putDouble("longitude", info.location.longitude);
+                attr.putString("name", "未知");
+                attr.putString("address", "未知");
+                attr.putString("city", "");
+                attr.putDouble("latitude", 0);
+                attr.putDouble("longitude", 0);
                 list.pushMap(attr);
+            } else {
+                for (PoiInfo info: poiList) {
+                    WritableMap attr = Arguments.createMap();
+                    attr.putString("name", info.name);
+                    attr.putString("address", info.address);
+                    attr.putString("city", info.city);
+                    attr.putDouble("latitude", info.location.latitude);
+                    attr.putDouble("longitude", info.location.longitude);
+                    list.pushMap(attr);
+                }
             }
             params.putArray("poiList", list);
         }
